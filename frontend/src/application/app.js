@@ -1,6 +1,6 @@
 
 // This is the style entry file
-import "../styles/turbo_drive.css";
+import "../styles/app.css";
 import "@hotwired/turbo";
 import { Application } from "@hotwired/stimulus";
 import { definitionsFromContext } from "@hotwired/stimulus-webpack-helpers";

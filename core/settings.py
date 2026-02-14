@@ -10,15 +10,14 @@ https://docs.djangoproject.com/en/5.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
 """
+
 import os
 from pathlib import Path
 
 import environ
 from django.utils.translation import gettext_lazy as _
 
-env = environ.Env(
-    DJANGO_DEBUG=(bool, False)
-)
+env = environ.Env(DJANGO_DEBUG=(bool, False))
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 environ.Env.read_env(os.path.join(BASE_DIR, '.env'), overwrite=False)
@@ -34,6 +33,7 @@ SECRET_KEY = (
 
 if not SECRET_KEY:
     from django.core.exceptions import ImproperlyConfigured
+
     raise ImproperlyConfigured(
         'The DJANGO_SECRET_KEY or SECRET_KEY environment variable must be set.'
     )
@@ -42,12 +42,14 @@ if not SECRET_KEY:
 # SECURITY WARNING: keep the secret key used in production secret!
 DEBUG = env.bool('DJANGO_DEBUG', default=False)
 
-ALLOWED_HOSTS = env.list('DJANGO_ALLOWED_HOSTS', default=['localhost', '127.0.0.1'])
+ALLOWED_HOSTS = env.list(
+    'DJANGO_ALLOWED_HOSTS', default=['localhost', '127.0.0.1']
+)
 
 # Application definition
 
 INSTALLED_APPS = [
-    'django.contrib.admin',
+    #'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -177,7 +179,9 @@ LOGIN_REDIRECT_URL = 'home'
 ACCOUNT_LOGOUT_REDIRECT_URL = 'home'
 
 ACCOUNT_USER_MODEL_USERNAME_FIELD = 'email'
-ACCOUNT_LOGIN_METHODS = {'email',}
+ACCOUNT_LOGIN_METHODS = {
+    'email',
+}
 ACCOUNT_SIGNUP_FIELDS = ['email*', 'password1*', 'password2*']
 ACCOUNT_UNIQUE_EMAIL = True
 ACCOUNT_SESSION_REMEMBER = True
@@ -209,9 +213,7 @@ LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
     'filters': {
-        'correlation_id': {
-            '()': 'cid.log.CidContextFilter'
-        },
+        'correlation_id': {'()': 'cid.log.CidContextFilter'},
     },
     'formatters': {
         'standard': {

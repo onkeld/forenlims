@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block content %}
+    <div class="p-6">
+        <h1 class="text-2xl font-bold mb-6">{% trans "User Management" %}</h1>
+        <table class="table w-full">
+            <thead>
+                <tr>
+                    <th>{% trans "Email" %}</th>
+                    <th>{% trans "First name" %}</th>
+                    <th>{% trans "Last name" %}</th>
+                    <th>{% trans "Active" %}</th>
+                    <th>{% trans "Staff" %}</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in users %}
+                    <tr>
+                        <td>{{ user.email }}</td>
+                        <td>{{ user.first_name }}</td>
+                        <td>{{ user.last_name }}</td>
+                        <td>{{ user.is_active }}</td>
+                        <td>{{ user.is_staff }}</td>
+                    </tr>
+                {% empty %}
+                    <tr>
+                        <td colspan="5">{% trans "No users found." %}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock content %}

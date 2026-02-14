@@ -22,4 +22,5 @@ urlpatterns = [
     path('', include('pages.urls')),
     path('system/', include('admin_portal.urls', namespace='admin_portal')),
     path('accounts/', include('allauth.urls')),
+    path('system/accounts/', include('accounts.urls', namespace='accounts')),
 ]

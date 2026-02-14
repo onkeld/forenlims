@@ -91,6 +91,12 @@
                     {# ── Navigation items (populated by admin_menu registry) ── #}
                     <ul class="flex-1 py-4 space-y-1">
                         {% block sidebar_nav %}
+                            {% for item in admin_menu_items %}
+                                <li>
+                                    <a href="{% url item.url_name %}"
+                                       class="flex items-center gap-3 rounded-lg px-3 py-2 hover:bg-base-300">{{ item.label }}</a>
+                                </li>
+                            {% endfor %}
                         {% endblock sidebar_nav %}
                     </ul>
                     {# ── Bottom: language switcher ─────────────────────────── #}

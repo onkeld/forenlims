@@ -1,4 +1,8 @@
 @import "tailwindcss";
+@plugin "daisyui";
+
+
+// The Following Styles are for the demo page and can be removed as soon as the demo is not needed anymore.
 
 .jumbotron {
   /*should be relative path of the entry css file*/
@@ -6,7 +10,7 @@
   background-size: cover;
 }
 
-@layer components{
+@layer components {
   .btn-blue {
     @apply inline-flex items-center;
     @apply px-4 py-2;

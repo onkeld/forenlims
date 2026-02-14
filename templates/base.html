@@ -1,7 +1,8 @@
 {% load webpack_loader static %}
 {% load i18n %}
 <!DOCTYPE html>
-<html lang="{% get_current_language as current_language %} {{ current_language }}">
+<html lang="{% get_current_language as current_language %}{{ current_language }}"
+      data-theme="forenlims">
     <head>
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -10,54 +11,92 @@
               content="ForenLIMS is an open-source Laboratory Information Management System for forensic genetics, built with Django.">
         <meta name="keywords"
               content="forensic, genetics, LIMS, laboratory, Django, open-source">
-        <title>ForenLIMS</title>
+        <title>
+            {% block title %}
+                ForenLIMS
+            {% endblock title %}
+        </title>
         {% stylesheet_pack 'app' %}
         {% javascript_pack 'app' attrs='defer' %}
     </head>
     <body>
-        <header>
-            <nav>
-                {% block language_switcher %}
-                    <div>
-                        <form method="post"
-                              action="{% url 'set_language' %}"
-                              class="inline-block"
-                              data-turbo="false">
-                            {% csrf_token %}
-                            <input type="hidden" name="next" value="{{ request.path }}">
-                            <label for="language-select">{% trans "Choose your language:" %}</label>
-                            {% get_current_language as current_language %}
-                            {% load language_tags %}
-                            <select id="language-select" name="language">
-                                {% get_current_language as current_language %}
-                                {% get_languages as languages %}
-                                {% for code, name in languages %}
-                                    <option value="{{ code }}"
-                                            {% if current_language == code %}selected{% endif %}>{{ name }}</option>
-                                {% endfor %}
-                            </select>
-                            <button type="submit"
-                                    class="ml-2 bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-700">
-                                {% trans "Switch" %}
-                            </button>
-                        </form>
+        {# daisyUI Drawer: sidebar left, content right #}
+        <div class="drawer lg:drawer-open">
+            <input id="sidebar-drawer" type="checkbox" class="drawer-toggle">
+            {# ================================================================ #}
+            {# DRAWER CONTENT (main area)                                       #}
+            {# ================================================================ #}
+            <div class="drawer-content flex flex-col min-h-screen">
+                {# ── Top bar (mobile hamburger + page title + user menu) ────── #}
+                <header class="navbar bg-base-100 border-b border-base-300 sticky top-0 z-10 lg:px-6">
+                    {# Hamburger — only visible on mobile #}
+                    <div class="flex-none lg:hidden">
+                        <label for="sidebar-drawer"
+                               aria-label="{% trans "Open sidebar" %}"
+                               class="btn btn-square btn-ghost">
+                            <svg xmlns="http://www.w3.org/2000/svg"
+                                 fill="none"
+                                 viewBox="0 0 24 24"
+                                 class="inline-block w-5 h-5 stroke-current">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                            </svg>
+                        </label>
                     </div>
-                {% endblock language_switcher %}
-                {% block user_profile %}
-                    <div>
-                        {% if user.is_authenticated %}
-                            <p>Username: {{ user.username }}</p>
-                            <p>Email: {{ user.email }}</p>
-                            <a href="{% url 'account_logout' %}">Logout</a>
-                        {% else %}
-                            <a href="{% url 'account_login' %}">Login</a>
-                            <a href="{% url 'account_signup' %}">Signup</a>
-                        {% endif %}
+                    {# Page title / breadcrumb slot #}
+                    <div class="flex-1 px-2">
+                        <span class="text-sm font-medium text-base-content/60 tracking-wide uppercase">
+                            {% block page_title %}
+                            {% endblock page_title %}
+                        </span>
                     </div>
-                {% endblock user_profile %}
-            </nav>
-        </header>
-        {% block content %}
-        {% endblock content %}
+                    {# User menu #}
+                    <div class="flex-none gap-2">{% include "partials/user_menu.html" %}</div>
+                </header>
+                {# ── Main content ─────────────────────────────────────────── #}
+                <main class="flex-1 p-6">
+                    {% block content %}
+                    {% endblock content %}
+                </main>
+                {# ── Footer ───────────────────────────────────────────────── #}
+                <footer class="footer footer-center p-4 text-base-content/40 text-xs border-t border-base-300">
+                    <p>ForenLIMS — {% trans "Open-source LIMS for Forensic Sciences" %}</p>
+                </footer>
+            </div>
+            {# ================================================================ #}
+            {# DRAWER SIDEBAR                                                   #}
+            {# ================================================================ #}
+            <aside class="drawer-side z-20">
+                {# Overlay click closes sidebar on mobile #}
+                <label for="sidebar-drawer"
+                       aria-label="{% trans "Close sidebar" %}"
+                       class="drawer-overlay"></label>
+                <nav class="menu bg-base-200 text-base-content min-h-full w-64 flex flex-col">
+                    {# ── Logo / Branding ──────────────────────────────────── #}
+                    <div class="px-4 py-5 border-b border-base-300">
+                        <a href="{% url 'home' %}" class="flex items-center gap-3 group">
+                            {# Logo placeholder — replace with {% block logo %} when branding exists #}
+                            <div class="w-8 h-8 rounded bg-primary flex items-center justify-center flex-shrink-0">
+                                <span class="text-primary-content font-bold text-sm">F</span>
+                            </div>
+                            <div class="flex flex-col leading-tight">
+                                <span class="font-semibold text-base-content text-sm tracking-wide">ForenLIMS</span>
+                                <span class="text-xs text-base-content/50">
+                                    {% block institute_name %}
+                                        {% trans "Forensic Laboratory" %}
+                                    {% endblock institute_name %}
+                                </span>
+                            </div>
+                        </a>
+                    </div>
+                    {# ── Navigation items (populated by admin_menu registry) ── #}
+                    <ul class="flex-1 py-4 space-y-1">
+                        {% block sidebar_nav %}
+                        {% endblock sidebar_nav %}
+                    </ul>
+                    {# ── Bottom: language switcher ─────────────────────────── #}
+                    <div class="border-t border-base-300 p-4">{% include "partials/language_switcher.html" %}</div>
+                </nav>
+            </aside>
+        </div>
     </body>
 </html>

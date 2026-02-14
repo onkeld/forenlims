@@ -1,7 +1,12 @@
 {% extends "base.html" %}
 {% load i18n %}
+{% block title %}
+    {% trans "Home" %} — ForenLIMS
+{% endblock title %}
+{% block page_title %}
+    {% trans "Home" %}
+{% endblock page_title %}
 {% block content %}
-    <h1 class="text-3xl font-bold underline">{% trans "Helllloooooo!" %}</h1>
-    <button class="btn btn-primary">daisyUI Test</button>
+    <h1 class="text-3xl font-bold">{% trans "Helllloooooo!" %}</h1>
     <div data-controller="testing"></div>
 {% endblock content %}

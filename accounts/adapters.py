@@ -1,3 +1,5 @@
+# /accounts/adapters.py
+
 from allauth.account.adapter import DefaultAccountAdapter
 from django.http import HttpRequest
 

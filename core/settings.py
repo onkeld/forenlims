@@ -59,7 +59,6 @@ INSTALLED_APPS = [
     'webpack_boilerplate',
     'cid.apps.CidAppConfig',
     'auditlog',
-    'widget_tweaks',
     'admin_portal.apps.AdminPortalConfig',
     'allauth',
     'allauth.account',

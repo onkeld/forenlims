@@ -59,6 +59,7 @@ INSTALLED_APPS = [
     'webpack_boilerplate',
     'cid.apps.CidAppConfig',
     'auditlog',
+    'widget_tweaks',
     'admin_portal.apps.AdminPortalConfig',
     'allauth',
     'allauth.account',
@@ -175,6 +176,12 @@ AUTHENTICATION_BACKENDS = [
 ]
 SITE_ID = 1
 
+# Deactivate Allauth's Signup Process to prevent users from registering themselves.
+# User Accounts should only be created by Admins or other Staff with adequate permissions.
+
+ACCOUNT_ADAPTER = 'accounts.adapters.NoSignupAccountAdapter'
+
+# Email Backend for development - prints emails to console. In production, this should be replaced with a real email backend.
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 LOGIN_REDIRECT_URL = 'home'

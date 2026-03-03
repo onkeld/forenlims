@@ -16,7 +16,7 @@ from accounts.forms import UserCreateForm
 from accounts.models import CustomUser
 
 
-class UserListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
+class AdminUserListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     """List all users. Requires accounts.view_customuser permission."""
 
     model = CustomUser
@@ -26,10 +26,10 @@ class UserListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     ordering = ('email',)
 
 
-class UserCreateView(LoginRequiredMixin, PermissionRequiredMixin, View):
-    """Create a new user. Requires accounts.add_customuser permission."""
+class AdminUserCreateView(LoginRequiredMixin, PermissionRequiredMixin, View):
+    """Create a new user. Requires accounts.create_customuser permission."""
 
-    permission_required = 'accounts.add_customuser'
+    permission_required = 'accounts.create_customuser'
     template_name = 'accounts/admin/user_create.html'
 
     def get(

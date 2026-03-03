@@ -66,7 +66,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     def __str__(self) -> str:
         return self.email
 
-
-# Create your models here.
-
-# Create your models here.
+    class Meta:
+        permissions = [
+            ('create_customuser', 'Can create users via admin UI'),
+        ]

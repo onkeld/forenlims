@@ -411,3 +411,51 @@ class TestUserToggleActive:
         response = client.post(admin_user_toggle_active_url(user))
         assert response.status_code == 302
         assert response['Location'] == reverse('accounts:admin_user_list')
+
+
+# ---------------------------------------------------------------------------
+# User Data Anonymization
+# ---------------------------------------------------------------------------
+# We do not want to have a delete option for users for audit reasons.
+# Users can only be deactivated. To comply with GDPR, we need to be able
+# to anonymize the personal data of inactive users after a certain period of
+# time.
+# Referential integrity for audit logs and related data must be maintained and
+# linked to a non-identifiable pseudonymizeduser record.
+# Metadata should store when the anonymization took place and which fields
+# were anonymized.
+
+class TestUserAnonymization:
+    pytestmark = pytest.mark.django_db
+
+    PERSONAL_FIELDS = {'email', 'first_name', 'last_name'}
+    NON_PERSONAL_FIELDS = {'id', 'password', 'last_login', 'is_active',
+                           'is_staff', 'is_superuser', 'date_joined',
+                           'anonymized_at', 'groups', 'user_permissions',
+                           }
+    # related objects containing personal data
+    PERSONAL_RELATIONS = {'emailaddress'}
+
+    def _unclassified_fields(self) -> set:
+        all_fields = {
+            f.name for f in User._meta.get_fields()
+            if hasattr(f, 'name')
+        }
+        return (all_fields
+        - self.PERSONAL_FIELDS
+        - self.PERSONAL_RELATIONS
+        - self.NON_PERSONAL_FIELDS
+        )
+
+    def test_personal_fields_are_known(self) -> None:
+        """
+        Fails when new fields are added to CustomUser that are not
+        explicitly classified as personal or non-personal.
+        Update PERSONAL_FIELDS or NON_PERSONAL_FIELDS accordingly.
+        """
+        unclassified = self._unclassified_fields()
+
+        assert not unclassified, (
+        f"Unclassified fields found: {unclassified}. "
+        'Add them to PERSONAL_FIELDS or NON_PERSONAL_FIELDS.'
+       )

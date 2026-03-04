@@ -22,6 +22,11 @@ class AccessControlMixin:
         url_for_permitted: str         — URL for the permitted user/superuser
                                          test
     """
+
+    http_method: str = 'get'  # default
+    expected_status_code: int = 200 #default
+
+
     pytestmark = pytest.mark.django_db
     url_for_anonymous: str
     url_for_authenticated: str
@@ -45,13 +50,13 @@ class AccessControlMixin:
         user = CustomUserFactory()
         perm = Permission.objects.get(codename=self.required_permission)
         user.user_permissions.add(perm)
-        user= user.__class__.objects.get(pk=user.pk)
+        user = user.__class__.objects.get(pk=user.pk)
         client.force_login(user)
-        response = client.get(self.url_for_permitted)
-        assert response.status_code == 200
+        response = getattr(client, self.http_method)(self.url_for_permitted)
+        assert response.status_code == self.expected_status_code
 
     def test_superuser_can_access(self, client) -> None:
         user = SuperUserFactory()
         client.force_login(user)
-        response = client.get(self.url_for_permitted)
-        assert response.status_code == 200
+        response = getattr(client, self.http_method)(self.url_for_permitted)
+        assert response.status_code == self.expected_status_code

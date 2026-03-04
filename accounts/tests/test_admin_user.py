@@ -25,6 +25,9 @@ def admin_user_create_url() -> str:
 def admin_user_edit_url(edit_user) -> str:
     return reverse('accounts:admin_user_edit', kwargs={'pk': edit_user.pk})
 
+def admin_user_toggle_active_url(edit_user) -> str:
+    return reverse('accounts:admin_user_toggle_active',
+                   kwargs={'pk': edit_user.pk})
 
 # ---------------------------------------------------------------------------
 # Access control
@@ -57,6 +60,20 @@ class TestAdminUserEditAccess(AccessControlMixin):
         self.url_for_anonymous = admin_user_edit_url(self.edit_user)
         self.url_for_authenticated = admin_user_edit_url(self.edit_user)
         self.url_for_permitted = admin_user_edit_url(self.edit_user)
+
+    required_permission = 'edit_customuser'
+class TestAdminUserToggleActiveAccess(AccessControlMixin):
+    http_method = 'post'
+    expected_status_code = 302
+
+    @pytest.fixture(autouse=True)
+    def setup_edit_user(self) -> None:
+        self.edit_user = CustomUserFactory()
+        self.url_for_anonymous = admin_user_toggle_active_url(self.edit_user)
+        self.url_for_authenticated = admin_user_toggle_active_url(
+            self.edit_user
+        )
+        self.url_for_permitted = admin_user_toggle_active_url(self.edit_user)
 
     required_permission = 'edit_customuser'
 
@@ -363,3 +380,34 @@ class TestUserEditGet:
         messages = list(response.context['messages'])
         assert len(messages) == 1
         assert 'successfully' in str(messages[0]).lower()
+
+# ---------------------------------------------------------------------------
+# Admin User Toggle Active Status
+# ---------------------------------------------------------------------------
+
+class TestUserToggleActive:
+    pytestmark = pytest.mark.django_db
+
+    def test_active_user_gets_deactivated(self, client) -> None:
+        admin = SuperUserFactory()
+        user = CustomUserFactory(is_active=True)
+        client.force_login(admin)
+        client.post(admin_user_toggle_active_url(user))
+        user.refresh_from_db()
+        assert user.is_active is False
+
+    def test_inactive_user_gets_activated(self, client) -> None:
+        admin = SuperUserFactory()
+        user = CustomUserFactory(is_active=False)
+        client.force_login(admin)
+        client.post(admin_user_toggle_active_url(user))
+        user.refresh_from_db()
+        assert user.is_active is True
+
+    def test_toggle_redirects_to_user_list(self, client) -> None:
+        admin = SuperUserFactory()
+        user = CustomUserFactory()
+        client.force_login(admin)
+        response = client.post(admin_user_toggle_active_url(user))
+        assert response.status_code == 302
+        assert response['Location'] == reverse('accounts:admin_user_list')

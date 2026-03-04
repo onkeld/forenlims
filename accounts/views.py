@@ -88,3 +88,20 @@ class AdminUserEditView(LoginRequiredMixin, PermissionRequiredMixin, View):
             messages.success(request, 'User successfully updated.')
             return redirect('accounts:admin_user_edit', pk=user.pk)
         return render(request, self.template_name, {'form': form})
+
+class AdminUserDeactivateView(LoginRequiredMixin,
+                              PermissionRequiredMixin, View):
+    """
+    Toggle user active status. Requires accounts.edit_customuser permission.
+    """
+
+    permission_required = 'accounts.edit_customuser'
+
+    def post(self, request: HttpRequest, *args: object,
+             **kwargs: object) -> HttpResponse:
+        user = get_object_or_404(CustomUser, pk=self.kwargs['pk'])
+        user.is_active = not user.is_active
+        user.save()
+        status = 'activated' if user.is_active else 'deactivated'
+        messages.success(request, f'User successfully {status}.')
+        return redirect('accounts:admin_user_list')

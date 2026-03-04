@@ -3,6 +3,7 @@ from django.urls import path
 
 from accounts.views import (
     AdminUserCreateView,
+    AdminUserDeactivateView,
     AdminUserEditView,
     AdminUserListView,
 )
@@ -15,4 +16,6 @@ urlpatterns = [
     path('edit/<int:pk>/',
          AdminUserEditView.as_view(),
          name='admin_user_edit'),
+    path('deactivate/<int:pk>/', AdminUserDeactivateView.as_view(),
+         name='admin_user_toggle_active'),
 ]

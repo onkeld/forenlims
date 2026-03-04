@@ -16,7 +16,7 @@
             <tbody>
                 {% for user in users %}
                     <tr>
-                        <td>{{ user.email }}</td>
+                        <td><a href="{% url 'accounts:admin_user_edit' pk=user.pk %}">{{ user.email }}</a></td>
                         <td>{{ user.first_name }}</td>
                         <td>{{ user.last_name }}</td>
                         <td>{{ user.is_active }}</td>

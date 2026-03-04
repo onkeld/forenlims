@@ -54,6 +54,15 @@
                 </header>
                 {# ── Main content ─────────────────────────────────────────── #}
                 <main class="flex-1 p-6">
+                    {% if messages %}
+                        <div class="mb-4 space-y-2">
+                            {% for message in messages %}
+                                <div class="alert alert-{{ message.tags }}">
+                                    {{ message }}
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
                     {% block content %}
                     {% endblock content %}
                 </main>

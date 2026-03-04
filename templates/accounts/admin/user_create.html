@@ -3,6 +3,7 @@
     <form method="post">
         {% csrf_token %}
         {{ form.as_p }}
-        <button type="submit">Benutzer anlegen</button>
+        <button type="submit">Create User</button>
     </form>
+    <a href="{% url 'accounts:admin_user_list' %}">Back to user list</a>
 {% endblock content %}

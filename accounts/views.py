@@ -1,18 +1,19 @@
 # accounts/views.py
 from allauth.account.forms import ResetPasswordForm
 from allauth.account.models import EmailAddress
+from django.contrib import messages
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth.mixins import (
     LoginRequiredMixin,
     PermissionRequiredMixin,
 )
 from django.http import HttpRequest, HttpResponse
-from django.shortcuts import redirect, render
+from django.shortcuts import get_object_or_404, redirect, render
 from django.utils import timezone
 from django.views import View
 from django.views.generic import ListView
 
-from accounts.forms import UserCreateForm
+from accounts.forms import UserCreateForm, UserEditForm
 from accounts.models import CustomUser
 
 
@@ -57,4 +58,33 @@ class AdminUserCreateView(LoginRequiredMixin, PermissionRequiredMixin, View):
             if reset_form.is_valid():
                 reset_form.save(request)
             return redirect('accounts:admin_user_list')
+        return render(request, self.template_name, {'form': form})
+
+class AdminUserEditView(LoginRequiredMixin, PermissionRequiredMixin, View):
+    """Edit an existing user. Requires accounts.edit_customuser permission."""
+
+    permission_required = 'accounts.edit_customuser'
+    template_name = 'accounts/admin/user_edit.html'
+
+    def get(
+        self, request: HttpRequest, *args: object, **kwargs: object
+    ) -> HttpResponse:
+        user = get_object_or_404(CustomUser, pk=self.kwargs['pk'])
+        form = UserEditForm(instance=user)
+        return render(request, self.template_name, {'form': form})
+
+    def post(self, request:HttpRequest, *args: object,
+             **kwargs: object) ->HttpResponse:
+        user = get_object_or_404(CustomUser, pk=self.kwargs['pk'])
+        old_email = user.email
+        form = UserEditForm(request.POST, instance=user)
+        if form.is_valid():
+            user = form.save()
+            new_email = user.email
+            if old_email != new_email:
+                EmailAddress.objects.filter(user=user, email=old_email).update(
+                email=new_email
+            )
+            messages.success(request, 'User successfully updated.')
+            return redirect('accounts:admin_user_edit', pk=user.pk)
         return render(request, self.template_name, {'form': form})

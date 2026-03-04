@@ -1,4 +1,5 @@
 import factory
+from allauth.account.models import EmailAddress
 from factory.django import DjangoModelFactory
 from faker import Faker
 
@@ -39,6 +40,22 @@ class CustomUserFactory(DjangoModelFactory):
             self.set_password('defaultpass123')
             self.save()
 
+    @factory.post_generation
+    def email_address(
+        self,
+        create: bool,
+        extracted: object,
+        **_kwargs: object,
+    ) -> None:
+        """Create Allauth EmailAddress entry."""
+        if not create:
+            return
+        EmailAddress.objects.create(
+    user=self,
+        email=self.email,
+            primary=True,
+            verified=True,
+        )
 
 class StaffUserFactory(CustomUserFactory):
     """Factory for creating staff users."""

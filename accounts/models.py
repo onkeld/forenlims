@@ -69,4 +69,5 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     class Meta:
         permissions = [
             ('create_customuser', 'Can create users via admin UI'),
+            ('edit_customuser', 'Can edit users via admin UI'),
         ]

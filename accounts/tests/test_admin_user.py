@@ -6,7 +6,7 @@ from django.core import mail
 from django.urls import reverse
 
 from accounts.tests.factories import CustomUserFactory, SuperUserFactory
-from accounts.tests.mixins import AccessControlMixin
+from accounts.tests.mixins import ViewAccessTestMixin
 
 User = get_user_model()
 
@@ -33,7 +33,7 @@ def admin_user_toggle_active_url(edit_user) -> str:
 # Access control
 # ---------------------------------------------------------------------------
 
-class TestUserListAccess(AccessControlMixin):
+class TestUserListAccess(ViewAccessTestMixin):
     """
     Only users with accounts.view_customuser permission may access the list.
     """
@@ -42,7 +42,7 @@ class TestUserListAccess(AccessControlMixin):
     url_for_permitted = admin_user_list_url()
     required_permission = 'view_customuser'
 
-class TestAdminUserCreateAccess(AccessControlMixin):
+class TestAdminUserCreateAccess(ViewAccessTestMixin):
     """
     Only users with accounts.create_customuser permission may access the admin_
     user_create form.
@@ -52,7 +52,7 @@ class TestAdminUserCreateAccess(AccessControlMixin):
     url_for_permitted = admin_user_create_url()
     required_permission = 'create_customuser'
 
-class TestAdminUserEditAccess(AccessControlMixin):
+class TestAdminUserEditAccess(ViewAccessTestMixin):
 
     @pytest.fixture(autouse=True)
     def setup_edit_user(self) -> None:
@@ -62,7 +62,7 @@ class TestAdminUserEditAccess(AccessControlMixin):
         self.url_for_permitted = admin_user_edit_url(self.edit_user)
 
     required_permission = 'edit_customuser'
-class TestAdminUserToggleActiveAccess(AccessControlMixin):
+class TestAdminUserToggleActiveAccess(ViewAccessTestMixin):
     http_method = 'post'
     expected_status_code = 302
 

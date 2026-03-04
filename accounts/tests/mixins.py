@@ -5,7 +5,7 @@ from django.contrib.auth.models import Permission
 from accounts.tests.factories import CustomUserFactory, SuperUserFactory
 
 
-class AccessControlMixin:
+class ViewAccessTestMixin:
     """
     Reusable Access Control Tests.
 

@@ -105,3 +105,10 @@ class AdminUserDeactivateView(LoginRequiredMixin,
         status = 'activated' if user.is_active else 'deactivated'
         messages.success(request, f'User successfully {status}.')
         return redirect('accounts:admin_user_list')
+
+class UserProfileView(LoginRequiredMixin, View):
+    """Display User Profile Details. Requires Login."""
+
+    model = CustomUser
+    template_name = 'accounts/user_profile.html'
+    context_object_name = 'user'

@@ -20,7 +20,7 @@ from django.urls import include, path
 urlpatterns = [
     path('i18n/', include('django.conf.urls.i18n')),  # Language switching
     path('', include('pages.urls')),
-    path('system/', include('admin_portal.urls', namespace='admin_portal')),
     path('accounts/', include('allauth.urls')),
-    path('system/accounts/', include('accounts.urls', namespace='accounts')),
+    path('accounts/', include('accounts.urls', namespace='accounts')),
+    path('admin/', include('admin_portal.urls', namespace='admin_portal')),
 ]

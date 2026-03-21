@@ -13,7 +13,7 @@ from django.utils import timezone
 from django.views import View
 from django.views.generic import ListView
 
-from accounts.forms import UserCreateForm, UserEditForm
+from accounts.admin_forms import AdminUserCreateForm, AdminUserEditForm
 from accounts.models import CustomUser
 
 
@@ -36,13 +36,13 @@ class AdminUserCreateView(LoginRequiredMixin, PermissionRequiredMixin, View):
     def get(
         self, request: HttpRequest, *args: object, **kwargs: object
     ) -> HttpResponse:
-        form = UserCreateForm()
+        form = AdminUserCreateForm()
         return render(request, self.template_name, {'form': form})
 
     def post(
         self, request: HttpRequest, *args: object, **kwargs: object
     ) -> HttpResponse:
-        form = UserCreateForm(request.POST)
+        form = AdminUserCreateForm(request.POST)
         if form.is_valid():
             user = form.save(commit=False)
             user.password = make_password(None)
@@ -70,14 +70,14 @@ class AdminUserEditView(LoginRequiredMixin, PermissionRequiredMixin, View):
         self, request: HttpRequest, *args: object, **kwargs: object
     ) -> HttpResponse:
         user = get_object_or_404(CustomUser, pk=self.kwargs['pk'])
-        form = UserEditForm(instance=user)
+        form = AdminUserEditForm(instance=user)
         return render(request, self.template_name, {'form': form})
 
     def post(self, request:HttpRequest, *args: object,
              **kwargs: object) ->HttpResponse:
         user = get_object_or_404(CustomUser, pk=self.kwargs['pk'])
         old_email = user.email
-        form = UserEditForm(request.POST, instance=user)
+        form = AdminUserEditForm(request.POST, instance=user)
         if form.is_valid():
             user = form.save()
             new_email = user.email

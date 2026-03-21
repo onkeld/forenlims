@@ -1,7 +1,7 @@
 #accounts/admin_urls.py
 from django.urls import path
 
-from accounts.views import (
+from accounts.admin_views import (
     AdminUserCreateView,
     AdminUserDeactivateView,
     AdminUserEditView,

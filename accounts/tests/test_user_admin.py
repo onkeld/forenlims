@@ -17,16 +17,17 @@ User = get_user_model()
 
 
 def admin_user_list_url() -> str:
-    return reverse('accounts:admin_user_list')
+    return reverse('admin_portal:accounts_admin:admin_user_list')
 
 def admin_user_create_url() -> str:
-    return reverse('accounts:admin_user_create')
+    return reverse('admin_portal:accounts_admin:admin_user_create')
 
 def admin_user_edit_url(edit_user) -> str:
-    return reverse('accounts:admin_user_edit', kwargs={'pk': edit_user.pk})
+    return reverse('admin_portal:accounts_admin:admin_user_edit', kwargs={'pk':
+                                                                          edit_user.pk})
 
 def admin_user_toggle_active_url(edit_user) -> str:
-    return reverse('accounts:admin_user_toggle_active',
+    return reverse('admin_portal:accounts_admin:admin_user_toggle_active',
                    kwargs={'pk': edit_user.pk})
 
 # ---------------------------------------------------------------------------
@@ -256,7 +257,9 @@ class TestUserCreateRedirect:
             },
         )
         assert response.status_code == 302
-        assert response['Location'] == reverse('accounts:admin_user_list')
+        assert response['Location'] == reverse(
+            'admin_portal:accounts_admin:admin_user_list'
+            )
 
 # ---------------------------------------------------------------------------
 # Admin User Edit
@@ -410,7 +413,9 @@ class TestUserToggleActive:
         client.force_login(admin)
         response = client.post(admin_user_toggle_active_url(user))
         assert response.status_code == 302
-        assert response['Location'] == reverse('accounts:admin_user_list')
+        assert response['Location'] == reverse(
+            'admin_portal:accounts_admin:admin_user_list'
+            )
 
 
 # ---------------------------------------------------------------------------

@@ -11,7 +11,7 @@ from django.http import HttpRequest, HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils import timezone
 from django.views import View
-from django.views.generic import ListView
+from django.views.generic import DetailView, ListView
 
 from accounts.forms import UserCreateForm, UserEditForm
 from accounts.models import CustomUser
@@ -57,7 +57,7 @@ class AdminUserCreateView(LoginRequiredMixin, PermissionRequiredMixin, View):
             reset_form = ResetPasswordForm(data={'email': user.email})
             if reset_form.is_valid():
                 reset_form.save(request)
-            return redirect('accounts:admin_user_list')
+            return redirect('admin_portal:accounts_admin:admin_user_list')
         return render(request, self.template_name, {'form': form})
 
 class AdminUserEditView(LoginRequiredMixin, PermissionRequiredMixin, View):
@@ -86,7 +86,8 @@ class AdminUserEditView(LoginRequiredMixin, PermissionRequiredMixin, View):
                 email=new_email
             )
             messages.success(request, 'User successfully updated.')
-            return redirect('accounts:admin_user_edit', pk=user.pk)
+            return redirect('admin_portal:accounts_admin:admin_user_edit',
+                            pk=user.pk)
         return render(request, self.template_name, {'form': form})
 
 class AdminUserDeactivateView(LoginRequiredMixin,
@@ -104,9 +105,9 @@ class AdminUserDeactivateView(LoginRequiredMixin,
         user.save()
         status = 'activated' if user.is_active else 'deactivated'
         messages.success(request, f'User successfully {status}.')
-        return redirect('accounts:admin_user_list')
+        return redirect('admin_portal:accounts_admin:admin_user_list')
 
-class UserProfileView(LoginRequiredMixin, View):
+class UserProfileView(LoginRequiredMixin, DetailView):
     """Display User Profile Details. Requires Login."""
 
     model = CustomUser

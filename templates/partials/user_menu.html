@@ -20,6 +20,9 @@
             class="dropdown-content menu menu-sm bg-base-100 rounded-box z-50 mt-2 w-48 shadow-lg border border-base-300">
             <li class="menu-title text-xs opacity-50 px-3 py-1">{{ user.email }}</li>
             <li>
+                <a href="{% url 'accounts:user_profile' pk=user.pk %}">{% trans "Profile" %}</a>
+            </li>
+            <li>
                 <a href="{% url 'account_logout' %}" class="text-error">{% trans "Logout" %}</a>
             </li>
         </ul>

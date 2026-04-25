@@ -1,5 +1,28 @@
 {% extends "base.html" %}
 {% block content %}
     <h1>User Profile</h1>
-    <a href="{% url 'admin_portal:accounts_admin:admin_user_list' %}">Back to user list</a>
+    <div class="card bg-base-100 w-96 shadow-sm">
+        <div class="card-body">
+            <h2 class="card-title">{{ user.get_full_name }}</h2>
+            <p>{{ user.email }}</p>
+        </div>
+        <div class="card-actions justify-end">
+            <ul class="menu menu-horizontal bg-base-200 rounded-box">
+                {% if request.user == user %}
+                <li>
+
+                        <a href="{% url 'accounts:user_edit' pk=user.pk %}" class="btn btn-xs btn-warning">Edit
+                        </a>
+                </li>
+                <li>
+                    <a href="{% url 'account_reset_password' %}" class="btn btn-xs btn-error">Change Password</a>
+                </li>
+                {% endif %}
+                <li>
+                    <a href="#" onclick="history.back()" class="btn btn-xs" >Back</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
 {% endblock content %}

@@ -1,9 +1,17 @@
 {% extends "base.html" %}
 {% block content %}
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Edit User</button>
-    </form>
-    <a href="{% url 'home' %}">Back to home page</a>
+    <div class="card bg-base-100 w-96 shadow-sm">
+        <div class="card-body">
+            <h1 class="card-title">Edit User</h1>
+            <form method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit">Edit User</button>
+            </form>
+        </div>
+
+        <div class="card-actions justify-end">
+            <a href="{% url 'accounts:user_profile' pk=user.pk %}">Back to User Profile</a>
+        </div>
+    </div>
 {% endblock content %}

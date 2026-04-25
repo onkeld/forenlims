@@ -1,0 +1,101 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-04-25 06:32+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+#: accounts/admin_menu.py:7 accounts/templates/accounts/admin/user_list.html:5
+msgid "User Management"
+msgstr ""
+
+#: accounts/admin_views.py:89
+msgid "User successfully updated."
+msgstr ""
+
+#: accounts/admin_views.py:107
+msgid "activated"
+msgstr ""
+
+#: accounts/admin_views.py:107
+msgid "deactivated"
+msgstr ""
+
+#: accounts/admin_views.py:108
+#, python-brace-format
+msgid "User successfully {status}."
+msgstr ""
+
+#: accounts/models.py:79
+msgid "Can create users via admin UI"
+msgstr ""
+
+#: accounts/models.py:80
+msgid "Can edit users via admin UI"
+msgstr ""
+
+#: accounts/templates/accounts/admin/user_edit.html:6
+#: accounts/templates/accounts/user_edit.html:5
+#: accounts/templates/accounts/user_edit.html:9
+msgid "Edit User"
+msgstr ""
+
+#: accounts/templates/accounts/admin/user_edit.html:8
+msgid "Back to user list"
+msgstr ""
+
+#: accounts/templates/accounts/admin/user_list.html:9
+msgid "Email"
+msgstr ""
+
+#: accounts/templates/accounts/admin/user_list.html:10
+msgid "First name"
+msgstr ""
+
+#: accounts/templates/accounts/admin/user_list.html:11
+msgid "Last name"
+msgstr ""
+
+#: accounts/templates/accounts/admin/user_list.html:12
+msgid "Active"
+msgstr ""
+
+#: accounts/templates/accounts/admin/user_list.html:13
+msgid "Staff"
+msgstr ""
+
+#: accounts/templates/accounts/admin/user_list.html:14
+msgid "Actions"
+msgstr ""
+
+#: accounts/templates/accounts/admin/user_list.html:29
+msgid "Edit"
+msgstr ""
+
+#: accounts/templates/accounts/admin/user_list.html:36
+msgid "Deactivate"
+msgstr ""
+
+#: accounts/templates/accounts/admin/user_list.html:38
+msgid "Activate"
+msgstr ""
+
+#: accounts/templates/accounts/admin/user_list.html:47
+msgid "No users found."
+msgstr ""
+
+#: accounts/templates/accounts/user_edit.html:14
+msgid "Back to User Profile"
+msgstr ""

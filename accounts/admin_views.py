@@ -10,6 +10,7 @@ from django.contrib.auth.mixins import (
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils import timezone
+from django.utils.translation import gettext_lazy as _
 from django.views import View
 from django.views.generic import ListView
 
@@ -85,7 +86,7 @@ class AdminUserEditView(LoginRequiredMixin, PermissionRequiredMixin, View):
                 EmailAddress.objects.filter(user=user, email=old_email).update(
                 email=new_email
             )
-            messages.success(request, 'User successfully updated.')
+            messages.success(request, _('User successfully updated.'))
             return redirect('admin_portal:accounts_admin:admin_user_edit',
                             pk=user.pk)
         return render(request, self.template_name, {'form': form})
@@ -103,6 +104,6 @@ class AdminUserDeactivateView(LoginRequiredMixin,
         user = get_object_or_404(CustomUser, pk=self.kwargs['pk'])
         user.is_active = not user.is_active
         user.save()
-        status = 'activated' if user.is_active else 'deactivated'
-        messages.success(request, f'User successfully {status}.')
+        status = _('activated') if user.is_active else _('deactivated')
+        messages.success(request, _( f'User successfully {status}.') )
         return redirect('admin_portal:accounts_admin:admin_user_list')

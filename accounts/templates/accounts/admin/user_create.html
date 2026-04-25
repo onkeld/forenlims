@@ -3,7 +3,7 @@
     <form method="post">
         {% csrf_token %}
         {{ form.as_p }}
-        <button type="submit">Create User</button>
+        <button type="submit">{% trans Create User %}</button>
     </form>
-    <a href="{% url 'admin_portal:accounts_admin:admin_user_list' %}">Back to user list</a>
+    <a href="{% url 'admin_portal:accounts_admin:admin_user_list' %}">{% trans Back to user list %}</a>
 {% endblock content %}

@@ -10,6 +10,7 @@ from django.contrib.auth.models import (
 )
 from django.db import models
 from django.utils import timezone
+from django.utils.translation import gettext_lazy as _
 
 
 class CustomUserManager(BaseUserManager):
@@ -74,6 +75,6 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 
     class Meta:
         permissions = [
-            ('create_customuser', 'Can create users via admin UI'),
-            ('edit_customuser', 'Can edit users via admin UI'),
+            ('create_customuser', _('Can create users via admin UI')),
+            ('edit_customuser', _('Can edit users via admin UI')),
         ]

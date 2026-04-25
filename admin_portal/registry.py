@@ -3,6 +3,8 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 
+from django.utils.translation import gettext as _
+
 
 @dataclass
 class MenuItem:
@@ -15,7 +17,7 @@ class MenuItem:
 
 
 class AdminMenuRegistry:
-    name = 'Admin Menu Registry'
+    name = _('Admin Menu Registry')
 
     def __init__(self) -> None:
         self._items: list[MenuItem] = []

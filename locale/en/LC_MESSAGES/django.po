@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-05 05:47+0000\n"
+"POT-Creation-Date: 2026-04-25 06:32+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,14 +18,95 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: templates/base.html:28
-msgid "Choose your language:"
+#: admin_portal/registry.py:20
+msgid "Admin Menu Registry"
 msgstr ""
 
-#: templates/base.html:41
+#: admin_portal/templates/admin_portal/dashboard.html:4
+#: admin_portal/templates/admin_portal/dashboard.html:7
+msgid "Dashboard"
+msgstr ""
+
+#: admin_portal/templates/admin_portal/dashboard.html:11
+msgid "Welcome to ForenLIMS"
+msgstr ""
+
+#: admin_portal/templates/admin_portal/dashboard.html:16
+msgid "User Management"
+msgstr ""
+
+#: admin_portal/templates/admin_portal/dashboard.html:17
+msgid "Coming soon"
+msgstr ""
+
+#: templates/allauth/layouts/base.html:18
+msgid "Messages:"
+msgstr ""
+
+#: templates/allauth/layouts/base.html:25
+msgid "Menu:"
+msgstr ""
+
+#: templates/allauth/layouts/base.html:31
+msgid "Change Email"
+msgstr ""
+
+#: templates/allauth/layouts/base.html:37
+msgid "Change Password"
+msgstr ""
+
+#: templates/allauth/layouts/base.html:43
+msgid "Account Connections"
+msgstr ""
+
+#: templates/allauth/layouts/base.html:49
+msgid "Two-Factor Authentication"
+msgstr ""
+
+#: templates/allauth/layouts/base.html:55
+msgid "Sessions"
+msgstr ""
+
+#: templates/allauth/layouts/base.html:61
+msgid "Sign Out"
+msgstr ""
+
+#: templates/allauth/layouts/base.html:68
+msgid "Sign In"
+msgstr ""
+
+#: templates/allauth/layouts/base.html:74
+msgid "Sign Up"
+msgstr ""
+
+#: templates/base.html:35
+msgid "Open sidebar"
+msgstr ""
+
+#: templates/base.html:67
+msgid "Open-source LIMS for Forensic Sciences"
+msgstr ""
+
+#: templates/base.html:76
+msgid "Close sidebar"
+msgstr ""
+
+#: templates/base.html:90
+msgid "Forensic Laboratory"
+msgstr ""
+
+#: templates/partials/language_switcher.html:19
 msgid "Switch"
 msgstr ""
 
-#: templates/pages/home.html:4
-msgid "Helllloooooo!"
+#: templates/partials/user_menu.html:23
+msgid "Profile"
+msgstr ""
+
+#: templates/partials/user_menu.html:26
+msgid "Logout"
+msgstr ""
+
+#: templates/partials/user_menu.html:31
+msgid "Login"
 msgstr ""

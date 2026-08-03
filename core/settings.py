@@ -55,6 +55,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.sites',
     'tailwind',
+    'theme',
     'cid.apps.CidAppConfig',
     'auditlog',
     'allauth',
@@ -63,6 +64,8 @@ INSTALLED_APPS = [
     'accounts.apps.AccountsConfig',
     'audittrail.apps.AudittrailConfig',
 ]
+
+TAILWIND_APP_NAME = 'theme'
 
 MIDDLEWARE = [
     'cid.middleware.CidMiddleware',

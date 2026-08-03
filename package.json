@@ -52,11 +52,12 @@
     "stylelint-config-standard": "^39.0.1",
     "stylelint-webpack-plugin": "^5.0.1",
     "tailwindcss": "^4.1.13",
-    "webpack": "^5.97.1",
+    "webpack": "^5.109.2",
     "webpack-assets-manifest": "^6.5.1",
-    "webpack-cli": "^7.0.2",
-    "webpack-dev-server": "^5.2.3",
+    "webpack-cli": "^7.2.2",
+    "webpack-dev-server": "^6.0.0",
     "webpack-merge": "^6.0.1"
+
   },
   "dependencies": {
     "@hotwired/stimulus": "^3.2.2",

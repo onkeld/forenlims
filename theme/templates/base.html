@@ -1,4 +1,4 @@
-{% load webpack_loader static %}
+{% load static tailwind_tags %}
 {% load i18n %}
 <!DOCTYPE html>
 <html lang="{% get_current_language as current_language %} {{ current_language }}">
@@ -10,9 +10,9 @@
               content="ForenLIMS is an open-source Laboratory Information Management System for forensic genetics, built with Django.">
         <meta name="keywords"
               content="forensic, genetics, LIMS, laboratory, Django, open-source">
+        {% tailwind_css %}
+
         <title>ForenLIMS</title>
-        {% stylesheet_pack 'turbo_drive' %}
-        {% javascript_pack 'turbo_drive' attrs='defer' %}
     </head>
     <body>
         <header>

@@ -54,7 +54,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sites',
-    'webpack_boilerplate',
+    'tailwind',
     'cid.apps.CidAppConfig',
     'auditlog',
     'allauth',
@@ -182,15 +182,8 @@ ACCOUNT_SIGNUP_FIELDS = ['email*', 'password1*', 'password2*']
 ACCOUNT_UNIQUE_EMAIL = True
 ACCOUNT_SESSION_REMEMBER = True
 
-STATICFILES_DIRS = [
-    BASE_DIR.joinpath('frontend/build'),
-]
-
 STATIC_ROOT = BASE_DIR.joinpath('static')
 
-WEBPACK_LOADER = {
-    'MANIFEST_FILE': BASE_DIR.joinpath('frontend/build/manifest.json'),
-}
 SECURE_SSL_REDIRECT = env.bool('DJANGO_SECURE_SSL_REDIRECT', default=False)
 SESSION_COOKIE_SECURE = env.bool('DJANGO_SESSION_COOKIE_SECURE', default=False)
 CSRF_COOKIE_SECURE = env.bool('DJANGO_CSRF_COOKIE_SECURE', default=False)

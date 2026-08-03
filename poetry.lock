@@ -614,18 +614,21 @@ doc = ["Sphinx", "sphinx-rtd-theme", "sphinxcontrib-spelling"]
 
 [[package]]
 name = "faker"
-version = "37.12.0"
+version = "40.36.0"
 description = "Faker is a Python package that generates fake data for you."
 optional = false
-python-versions = ">=3.9"
+python-versions = ">=3.10"
 groups = ["dev"]
 files = [
-    {file = "faker-37.12.0-py3-none-any.whl", hash = "sha256:afe7ccc038da92f2fbae30d8e16d19d91e92e242f8401ce9caf44de892bab4c4"},
-    {file = "faker-37.12.0.tar.gz", hash = "sha256:7505e59a7e02fa9010f06c3e1e92f8250d4cfbb30632296140c2d6dbef09b0fa"},
+    {file = "faker-40.36.0-py3-none-any.whl", hash = "sha256:82b9497d9cfe017048075bcf969298a74b1b6e39f5e4dad1211085d1133f7b62"},
+    {file = "faker-40.36.0.tar.gz", hash = "sha256:754048c76c03afa7de83eee8f4bcee3cf668cbb7d995f54a4e9678db7f110308"},
 ]
 
 [package.dependencies]
-tzdata = "*"
+tzdata = {version = "*", markers = "platform_system == \"Windows\""}
+
+[package.extras]
+tzdata = ["tzdata"]
 
 [[package]]
 name = "filelock"
@@ -1458,6 +1461,7 @@ files = [
     {file = "tzdata-2026.2-py2.py3-none-any.whl", hash = "sha256:bbe9af844f658da81a5f95019480da3a89415801f6cc966806612cc7169bffe7"},
     {file = "tzdata-2026.2.tar.gz", hash = "sha256:9173fde7d80d9018e02a662e168e5a2d04f87c41ea174b139fbef642eda62d10"},
 ]
+markers = {dev = "platform_system == \"Windows\""}
 
 [[package]]
 name = "urllib3"
@@ -1498,4 +1502,4 @@ python-discovery = ">=1.4.2"
 [metadata]
 lock-version = "2.1"
 python-versions = ">=3.13,<4"
-content-hash = "81f033cb3bf2de20167331774772a38d44e3afe36e070ceb60a4203dc8fb37b1"
+content-hash = "dee7822907bebf5a999b406db359079a64d1fdaecce0c5fb0c8d398c9b34046a"

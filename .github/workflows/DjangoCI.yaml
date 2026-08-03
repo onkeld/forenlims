@@ -54,18 +54,12 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: "24" # oder '18' je nach Projekt
+          node-version: "24"
           cache: "npm"
           cache-dependency-path: package-lock.json
 
-      - name: Install frontend dependencies
-        working-directory: ./frontend
+      - name: Install npm dependencies   # ❌ FEHLT!
         run: npm ci
-
-      - name: Build frontend
-        working-directory: ./frontend
-        run: npm run build
-
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
@@ -76,16 +70,9 @@ jobs:
 
       - name: Install dependencies
         run: poetry install
-      - name: Ensure frontend manifest exists for tests
-        run: |
-          MANIFEST_PATH="frontend/build/manifest.json"
-          if [ ! -f "$MANIFEST_PATH" ]; then
-            mkdir -p "$(dirname "$MANIFEST_PATH")"
-            printf '%s\n' '{"main.js": "/static/main.js", "main.css": "/static/main.css"}' > "$MANIFEST_PATH"
-            echo "Wrote fallback manifest at $MANIFEST_PATH"
-          else
-            echo "$MANIFEST_PATH already exists"
-          fi
+
+      - name: Build Frontend Assets
+        run: poetry run python manage.py tailwind build
       - name: Run Ruff
         run: poetry run ruff check .
 

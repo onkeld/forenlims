@@ -18,13 +18,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: theme/templates/base.html:28
-msgid "Choose your language:"
-msgstr "Wählen Sie Ihre Sprache"
-
-#: theme/templates/base.html:41
-msgid "Switch"
-msgstr "Sprache Wechseln"
-
-#~ msgid "Helllloooooo!"
-#~ msgstr "Mooooin!"
+#: pages/templates/home.html:4
+msgid "Helllloooooo!"
+msgstr ""

@@ -40,7 +40,7 @@ jobs:
 
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Ensure DJANGO_SECRET_KEY present (fallback for fork PRs)
         run: |
@@ -54,18 +54,14 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: "20" # oder '18' je nach Projekt
+          node-version: "24"
           cache: "npm"
           cache-dependency-path: package-lock.json
 
-      - name: Install frontend dependencies
-        working-directory: ./frontend
-        run: npm ci
-
-      - name: Build frontend
-        working-directory: ./frontend
-        run: npm run build
-
+      - name: Install npm dependencies
+        run: |
+          npm ci
+          cd theme/static_src && npm ci && cd ..
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
@@ -76,6 +72,19 @@ jobs:
 
       - name: Install dependencies
         run: poetry install
+      - name: Debug environment
+        run: |
+          echo "=== PATH ==="
+          echo $PATH
+          echo "=== theme/ exists? ==="
+          ls -la theme/ || echo "theme/ not found"
+          echo "=== rimraf location ==="
+          find . -name "rimraf" -type f 2>/dev/null
+          echo "=== theme/static_src/node_modules/.bin ==="
+          ls -la theme/static_src/node_modules/.bin/ 2>/dev/null || echo "not found"
+      - name: Build Frontend Assets
+
+        run: export PATH="./node_modules/.bin:./theme/static_src/node_modules/.bin:$PATH" && poetry run python manage.py tailwind build
       - name: Run Ruff
         run: poetry run ruff check .
       - name: Run djLint
